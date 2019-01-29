@@ -12,7 +12,7 @@ const api = require('./src/routes/api');
 
 //setup mongoose and mongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/treatment_api', {
-  useNewUrlParser:true
+  useNewUrlParser:true, useCreateIndex: true
 });
 mongoose.connection.on('connected', () => {
   console.log("Succesful")
