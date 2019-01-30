@@ -7,20 +7,19 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 const PORT = process.env.PORT || 3000;
 
+
+
 //import api routes
 const api = require('./src/routes/api');
+const APIM = process.env.APIM
 
 //setup mongoose and mongoDB
-const MONGODB_URI = process.env.MONGODB_URI;
-
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true
+mongoose.connect(APIM, {
+  useNewUrlParser:true, useCreateIndex: true
 });
-
-mongoose.connection.on("connected", () => {
-  const msg = {
-    success: true
-  };
+mongoose.connection.on('connected', () => {
+  console.log("Succesful")
+})
 
 
 //middleware
