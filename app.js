@@ -13,14 +13,15 @@ const api = require('./src/routes/api');
 //setup mongoose and mongoDB
 const MONGODB_URI = process.env.MONGODB_URI;
 
-ODM.connect(MONGODB_URI, {
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true
 });
 
-ODM.connection.on("connected", () => {
+mongoose.connection.on("connected", () => {
   const msg = {
     success: true
   };
+
 
 //middleware
 app.use(morgan('combined'));
