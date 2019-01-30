@@ -11,12 +11,16 @@ const PORT = process.env.PORT || 3000;
 const api = require('./src/routes/api');
 
 //setup mongoose and mongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/treatment_api', {
-  useNewUrlParser:true, useCreateIndex: true
+const MONGODB_URI = process.env.MONGODB_URI;
+
+ODM.connect(MONGODB_URI, {
+  useNewUrlParser: true
 });
-mongoose.connection.on('connected', () => {
-  console.log("Succesful")
-})
+
+ODM.connection.on("connected", () => {
+  const msg = {
+    success: true
+  };
 
 //middleware
 app.use(morgan('combined'));
