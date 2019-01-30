@@ -40,11 +40,13 @@ const findBy = (req,res) =>{
 	}
 
 const createAppointment = (body, day) =>{
+	//console.log(body.user);
 	const newAppointment = new Appointment ({
 		_id: mongoose.Types.ObjectId(),
 		name: body.name,
 		phoneNumber: body.phoneNumber,
 		treatmentId: body._id,
+		user: body.user,
 		day
 	})
 

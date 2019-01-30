@@ -7,7 +7,7 @@ const appointmentSchema = new Schema({
 	phoneNumber:{ type: Number, required: true },
 	day:{ type: String, required: true },
 	treatmentId:{ type: Schema.Types.ObjectId, ref: 'Treatment'},
-	user: { type: Schema.Types.ObjectId, ref: 'User'},
+	user: { type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 
