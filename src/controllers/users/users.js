@@ -162,27 +162,67 @@ const login = (request, response) => {
 }
 
 
-const updateBy = (req,res) =>{
-		User
-		.updateOne(
-			{_id:req.params.userId},
-			{name: req.body.name,
-			email: req.body.email}
-			)
+const updateBy = (request,response) =>{
+	const name = request.body.name;
+	const email = request.body.email;
+	const password = request.body.password;
+	const phoneNumber = request.body.phoneNumber;
 
-		.then(data => {
-			res
-				.json({
-					type: "User Updated",
-					data: data
-				})
-				.status(200)
+
+		User
+		.findOne({_id:request.params.userId})
+		.then(function(user){
+			//save new user
+			bcrypt.compare(password, user.password, (error, result) =>{
+				if(result) {
+					user.name = name;
+					user.email = email;
+					user.phoneNumber = phoneNumber;
+
+					user.save()
+						.then(saved => {
+							response
+								.status(201)
+								.json({
+									message: 'User Updated successfully',
+									user: saved
+								});
+						})
+				} else {
+					bcrypt.hash(password, 10, (error, hash) =>{
+						if (error) {
+							return response
+							.status(500)
+							.json({
+								message: error
+							});
+						}
+
+						user.name = name;
+						user.email = email;
+						user.phoneNumber = phoneNumber;
+						user.password = hash;
+
+						user
+							.save()
+							.then(saved =>{
+								response
+								.status(201)
+								.json({
+									message: 'User Updated successfully',
+									user:saved
+								});
+							})
+					});
+				}
+			});
 		})
 		.catch(err =>{
-			console.log(`caugth error: ${err}`);
-			return res.status(500).json(err);
-		})
+			console.log(`caught the error: ${err}`);
+			return response.status(404).json({"type": "Not Found"});
+		});
 	}
+
 
 const findTreatmentsBy = (req, res) =>{
 	Treatment

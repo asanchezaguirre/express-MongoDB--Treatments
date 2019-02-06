@@ -13,7 +13,7 @@ app.get('/users', isAuthenticated, Users.index);
 app.get('/users/:userId', isAuthenticated, Users.findBy);
 app.get('/users/:userId/treatments', Users.findTreatmentsBy)
 //app.post('/users', Users.create);
-app.put('/users/:userId', Users.updateBy);
+app.put('/users/:userId', isAuthenticated, Users.updateBy);
 
 //crear ruta para poder crear un usuario
 //auth routes
