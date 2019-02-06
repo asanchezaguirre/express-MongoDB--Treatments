@@ -45,19 +45,21 @@ const createAppointment = (body, day) =>{
 		_id: mongoose.Types.ObjectId(),
 		name: body.name,
 		phoneNumber: body.phoneNumber,
+		day,
 		treatmentId: body._id,
-		user: body.user,
-		day
+		user: body.user
+		
 	})
 
 	newAppointment.save()
+	console.log(newAppointment)
 		return newAppointment._id
 }
 
 
 const create = (req, res) =>{
 		
-		const newIds = req.body.listOfTreatments.split(' ')
+		const newIds = req.body.listOfTreatments.split(',')
 		const newTreatment = new Treatment({  
 			_id: mongoose.Types.ObjectId(), 
 			description: req.body.description,

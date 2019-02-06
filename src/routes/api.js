@@ -11,9 +11,11 @@ const Appointments = require('../controllers/appointments/appointments');
 //Users Routes
 app.get('/users', isAuthenticated, Users.index);
 app.get('/users/:userId', isAuthenticated, Users.findBy);
-app.get('/users/:userId/treatments', Users.findTreatmentsBy)
+app.get('/users/:userId/treatments', Users.findTreatmentsBy);
 //app.post('/users', Users.create);
 app.put('/users/:userId', isAuthenticated, Users.updateBy);
+app.delete('/users/:userId', isAuthenticated, Users.deleteBy);
+
 
 //crear ruta para poder crear un usuario
 //auth routes
@@ -33,6 +35,6 @@ app.get('/appointments', Appointments.index);
 //app.get('/appointments/:appointmentId', Appointments.findBy);
 //app.post('/appointments', Appointments.create);
 //app.put('/appointments/:userId', Appointments.updateBy);
-//app.delete('/appointments/:userId', Appointments.removeBy);
+//app.delete('/appointments/:userId', isAuthenticated, Appointments.removeBy);
 
 module.exports = app;

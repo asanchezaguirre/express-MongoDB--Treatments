@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../../models/User')
 const Treatment = require('../../models/Treatment')
+const Appointment = require('../../models/Appointment')
 
 
 
@@ -243,6 +244,28 @@ const findTreatmentsBy = (req, res) =>{
 }
 
 
+const deleteBy = (req, res) => {
+    User
+        .findById(req.params.userId, function (err, user) {
+            if (!err) {
+                Appointment.deleteMany({ user: { $in: [user._id] } }, function (err) { })
+                Treatment.deleteMany({ user: { $in: [user._id] } }, function (err) { })
+                user
+                    .remove()
+                    .then(() => {
+                        res.status(200)
+                            .json({
+                                message: 'User was deleted'
+                            })
+                    })
+            }
+        }).catch(err => {
+            console.log(`caugth err: ${err}`);
+            return res.status(500).json({ message: 'You do not have permission' })
+        })
+}
+
+
 module.exports = {
 	index,
 	create,
@@ -250,5 +273,6 @@ module.exports = {
 	updateBy,
 	findTreatmentsBy,
 	signup,
-	login
+	login,
+	deleteBy
 }
